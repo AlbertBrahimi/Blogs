@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                          /* Set the JavaScript language version for emitted JavaScript. */
+    "module": "commonjs",                        /* Specify the module code generation method. */
+    "esModuleInterop": true,                     /* Enable compatibility with CommonJS modules. */
+    "forceConsistentCasingInFileNames": true,    /* Ensure consistent file casing in imports. */
+    "strict": true,                              /* Enable all strict type-checking options. */
+    "skipLibCheck": true                         /* Skip type checking of all declaration files. */
+  },
+  "include": ["src/**/*.ts"],                    /* Specify the files to be included in the compilation. */
+  "exclude": ["node_modules", "**/*.spec.ts"]    /* Exclude unnecessary files from compilation. */
+}
