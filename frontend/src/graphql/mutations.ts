@@ -8,3 +8,13 @@ export const DELETE_USER = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+mutation CreateOneUser($name: String!, $email: String!) {
+  createUser(name: $name, email: $email) {
+    id
+    name
+    email
+  }
+}
+`

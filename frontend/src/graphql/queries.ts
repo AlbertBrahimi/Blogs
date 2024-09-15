@@ -9,3 +9,14 @@ export const GET_USERS = gql`
     }
   }
 `;
+
+export const GET_USERS_DATA_BY_ID = gql`
+
+query GetUserPosts ($userId:Int!){
+userPosts(userId: $userId) {
+  id
+  title
+  content
+}
+}
+`;

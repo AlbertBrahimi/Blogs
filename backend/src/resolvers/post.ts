@@ -21,14 +21,10 @@ export const PostType = objectType({
 export const PostQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.list.field('posts', {
+    t.list.field('userPosts', {
       type: 'Post',
-      resolve: (_parent, _args) => prisma.post.findMany(),
-    });
-    t.field('post', {
-      type: 'Post',
-      args: { id: 'Int' },
-      resolve: (_parent, { id }) => prisma.post.findUnique({ where: { id } }),
+      args: { userId: 'Int' },
+      resolve: (_parent, { userId }) => prisma.post.findMany({ where: { authorId: userId } }),
     });
   },
 });

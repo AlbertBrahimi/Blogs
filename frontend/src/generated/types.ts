@@ -63,20 +63,19 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
-  post?: Maybe<Post>;
-  posts?: Maybe<Array<Maybe<Post>>>;
   user?: Maybe<User>;
+  userPosts?: Maybe<Array<Maybe<Post>>>;
   users?: Maybe<Array<Maybe<User>>>;
-};
-
-
-export type QueryPostArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryUserArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryUserPostsArgs = {
+  userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type User = {

@@ -23,7 +23,9 @@ export const UserQuery = extendType({
   definition(t) {
     t.list.field('users', {
       type: 'User',
-      resolve: (_parent, _args) => prisma.user.findMany(),
+      resolve: (_parent, _args) => prisma.user.findMany({
+        orderBy:{name: 'asc'}
+      }),
     });
     t.field('user', {
       type: 'User',

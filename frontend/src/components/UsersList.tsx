@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useGetUsersQuery, useDeleteUserMutation } from '../generated/operations';
 import { Table, Button, message } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
-
+import CreateUserModal from './CreateUserModal';  
+import {createUserColumns} from './Colums'; 
 interface User {
   id: number;
   name: string;
@@ -9,7 +10,7 @@ interface User {
 }
 
 const UserList: React.FC = () => {
-  const { data, loading, error, refetch } = useGetUsersQuery();  
+  const { data,refetch } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation({
     onCompleted: () => {
       refetch();
@@ -20,50 +21,35 @@ const UserList: React.FC = () => {
     },
   });
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
   const handleDelete = (id: number) => {
     deleteUser({ variables: { id } });
   };
 
-  const columns: ColumnsType<User> = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_text, record) => (
-        <Button type="primary" danger onClick={() => handleDelete(record.id)}>
-          Delete
-        </Button>
-      ),
-    },
-  ];
+  const columns = createUserColumns(handleDelete);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
-  const filteredUsers = data?.users?.filter(user => user !== null) as User[]; 
-  const pageSize = filteredUsers.length > 5 ? 5 : filteredUsers.length;
+  const filteredUsers = data?.users?.filter(user => user !== null) as User[];
+  const pageSize = filteredUsers?.length > 5 ? 5 : filteredUsers?.length;
 
   return (
-    <Table 
-      columns={columns} 
-      dataSource={filteredUsers} 
-      rowKey="id"
-      pagination={{ pageSize }} 
-    />
+    <>
+      <Button type="primary" onClick={openModal} style={{ marginBottom: '16px' }}>
+        Create a User
+      </Button>
+
+      <Table
+        columns={columns}
+        dataSource={filteredUsers}
+        rowKey="id"
+        pagination={{ pageSize }}
+      />
+      <CreateUserModal visible={isModalVisible} onClose={closeModal} refetchData={refetch} />
+    </>
   );
 };
 
