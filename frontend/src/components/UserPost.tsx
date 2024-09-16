@@ -1,31 +1,31 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetUserPostsQuery } from '../generated/operations'; 
+import { Empty } from 'antd'; 
+import { Post, useGetUserPostsQuery } from '../generated/operations';
+import UserBlogs from './ui/BlogsCrad';
 
 const UserPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { data, loading, error } = useGetUserPostsQuery({
+  const { data, loading, error, refetch } = useGetUserPostsQuery({
     variables: { userId: Number(id) || 0 },
   });
 
-  if (loading) return <p>Loading posts...</p>; 
-  if (error) return <p>Error: {error.message}</p>; 
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-  if (!data || !data.userPosts || data.userPosts.length === 0) {
-    return <p>No posts found for user ID: {id}</p>;
-  }
+  const posts = (data?.userPosts || []).filter((post): post is Post => post !== null);
 
   return (
     <div>
-      <div>
-        {data.userPosts.map((post) => (
-          <div key={post?.id}>
-            <h2>{post?.title}</h2>
-            <p>{post?.content}</p>
-          </div>
-        ))}
-      </div>
+      {posts.length > 0 ? (
+        <UserBlogs posts={posts} userId={id} refetch={refetch}/>
+      ) : (
+        <Empty
+          description={<span>No posts found for user ID: {id}</span>}
+          style={{ marginTop: '20px' }}
+        />
+      )}
     </div>
   );
 };

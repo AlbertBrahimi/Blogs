@@ -1,0 +1,37 @@
+mutation DeleteUser($id: Int!) {
+  deleteUser(id: $id) {
+    id
+    name
+  }
+}
+
+mutation CreateOneUser($name: String!, $email: String!) {
+  createUser(name: $name, email: $email) {
+    id
+    name
+    email
+  }
+}
+
+mutation CreatePost($title: String!, $content: String!, $authorId: Int!) {
+  createPost(title: $title, content: $content, authorId: $authorId) {
+    id
+    title
+    content
+    authorId
+  }
+}
+
+mutation DeletePost($id: Int!) {
+  deletePost(id: $id) {
+    id
+  }
+}
+
+mutation UpdatePost($id: Int!, $title: String, $content: String) {
+  updatePost(id: $id, title: $title, content: $content) {
+    id
+    title
+    content
+  }
+}

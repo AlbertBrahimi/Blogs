@@ -56,6 +56,7 @@ export type MutationUpdatePostArgs = {
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
+  authorId?: Maybe<Scalars['Int']['output']>;
   content?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;

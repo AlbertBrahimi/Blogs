@@ -10,6 +10,7 @@ export const PostType = objectType({
     t.int('id');
     t.string('title');
     t.string('content');
+    t.int('authorId');
     t.field('author', {
       type: 'User',
       resolve: (parent) => prisma.user.findUnique({ where: { id: parent.authorId } }),

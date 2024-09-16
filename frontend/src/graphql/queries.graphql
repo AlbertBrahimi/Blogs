@@ -1,0 +1,15 @@
+query GetUsers {
+  users {
+    id
+    name
+    email
+  }
+}
+
+query GetUserPosts($userId: Int!) {
+  userPosts(userId: $userId) {
+    id
+    title
+    content
+  }
+}
