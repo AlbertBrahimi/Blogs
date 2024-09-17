@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Define Post type
 export const PostType = objectType({
   name: 'Post',
   definition(t) {
@@ -18,7 +17,6 @@ export const PostType = objectType({
   },
 });
 
-// Define Post Queries
 export const PostQuery = extendType({
   type: 'Query',
   definition(t) {
@@ -30,7 +28,6 @@ export const PostQuery = extendType({
   },
 });
 
-// Define Post Mutations
 export const PostMutation = extendType({
   type: 'Mutation',
   definition(t) {

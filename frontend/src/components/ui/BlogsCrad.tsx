@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Col, Row, Button, message } from 'antd';
+import { Card, Col, Row, Button } from 'antd';
 import { Post } from '../../generated/operations';
 import UpdatePostModal from './UpdatePost';
-import { useDeletePostMutation } from '../../generated/operations';
+import  {useDeletePost}  from '../../customHooks/postOperationsHooks';
+
 
 interface UserBlogsProps {
   posts: (Post | null)[];
@@ -10,29 +11,16 @@ interface UserBlogsProps {
   refetch?: () => void;
 }
 
-const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
-  const [deletePost] = useDeletePostMutation({
-    onCompleted: () => {
-      refetch?.();
-      message.success('Post deleted successfully');
-    },
-    onError: (err) => {
-      message.error(`Error: ${err.message}`);
-    },
-  });
-
+const UserBlogs: React.FC<UserBlogsProps> = ({ posts, refetch }) => {
+  const { handleDeletePost } = useDeletePost({ refetch });
+  
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
-  const handleDelete = (id: number) => {
-    deletePost({ variables: { id } });
-  };
 
   const handleEdit = (post: Post) => {
     setSelectedPost(post);
     setUpdateModalVisible(true);
   };
-
 
   const closeUpdateModal = () => {
     setUpdateModalVisible(false);
@@ -51,21 +39,21 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
                 style={{
                   marginBottom: '16px',
                   borderRadius: '8px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                 }}
               >
                 <p>{post.content}</p>
-                <Button 
-                  type="primary" 
-                  danger 
-                  style={{ marginTop: '20px', marginRight: '10px' }} 
-                  onClick={() => post.id !== null && post.id !== undefined && handleDelete(post.id)}
+                <Button
+                  type="primary"
+                  danger
+                  style={{ marginTop: '20px', marginRight: '10px' }}
+                  onClick={() => post.id && handleDeletePost(post.id)}
                 >
                   Delete Post
                 </Button>
-                <Button 
-                  type="default" 
-                  style={{ marginTop: '20px' }} 
+                <Button
+                  type="default"
+                  style={{ marginTop: '20px' }}
                   onClick={() => handleEdit(post)}
                 >
                   Edit Post
@@ -75,10 +63,10 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
           ))}
       </Row>
       {selectedPost && (
-        <UpdatePostModal 
-          visible={updateModalVisible} 
-          onClose={closeUpdateModal} 
-          post={selectedPost} 
+        <UpdatePostModal
+          visible={updateModalVisible}
+          onClose={closeUpdateModal}
+          post={selectedPost}
           refetch={refetch}
         />
       )}
@@ -87,3 +75,4 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
 };
 
 export default UserBlogs;
+

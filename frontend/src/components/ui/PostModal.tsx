@@ -1,36 +1,16 @@
 import React from 'react';
-import { Modal, Form, Input, Button, message } from 'antd';
-import { useCreatePostMutation } from '../../generated/operations';
+import { Modal, Form, Input, Button } from 'antd';
+import  {useCreatePost}  from '../../customHooks/postOperationsHooks';
 
 interface PostModalProps {
   visible: boolean;
   onClose: () => void;
   authorId?: string;
-  refetch?: () => void; 
+  refetch?: () => void;
 }
 
 const PostModal: React.FC<PostModalProps> = ({ visible, onClose, authorId, refetch }) => {
-  const [form] = Form.useForm();
-  const [createPost] = useCreatePostMutation({
-    onCompleted: () => {
-      message.success('Post created successfully!');
-      form.resetFields();
-      if (refetch) {
-        refetch(); 
-      }
-      onClose();
-    },
-    onError: (error) => {
-      console.error('Failed to create post:', error);
-      message.error('Failed to create post. Please try again.');
-    }
-  });
-
-  const handleCreatePost = (values: { title: string; content: string }) => {
-    createPost({
-      variables: { ...values, authorId: Number(authorId) },
-    });
-  };
+  const { form, handleCreatePost } = useCreatePost({ authorId, onClose, refetch });
 
   return (
     <Modal

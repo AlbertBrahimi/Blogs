@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Define User type
 export const UserType = objectType({
   name: 'User',
   definition(t) {
@@ -17,7 +16,6 @@ export const UserType = objectType({
   },
 });
 
-// Define User Queries
 export const UserQuery = extendType({
   type: 'Query',
   definition(t) {
@@ -27,15 +25,9 @@ export const UserQuery = extendType({
         orderBy:{name: 'asc'}
       }),
     });
-    t.field('user', {
-      type: 'User',
-      args: { id: 'Int' },
-      resolve: (_parent, { id }) => prisma.user.findUnique({ where: { id } }),
-    });
   },
 });
 
-// Define User Mutations
 export const UserMutation = extendType({
   type: 'Mutation',
   definition(t) {

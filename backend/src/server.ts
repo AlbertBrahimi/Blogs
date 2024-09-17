@@ -14,7 +14,6 @@ const server = new ApolloServer({
 
 async function startServer() {
   await server.start();
-  //@ts-expect-error
   server.applyMiddleware({ app });
 
   app.listen({ port: 4000 }, () =>

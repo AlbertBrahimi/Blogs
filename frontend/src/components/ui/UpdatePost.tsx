@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal, Form, Input, Button, message } from 'antd';
-import { Post, useUpdatePostMutation } from '../../generated/operations';
+import { Modal, Form, Input, Button } from 'antd';
+import { Post } from '../../generated/operations';
+import  {useUpdatePost}  from '../../customHooks/postOperationsHooks';
+
 
 interface UpdatePostModalProps {
   visible: boolean;
@@ -10,33 +12,7 @@ interface UpdatePostModalProps {
 }
 
 const UpdatePostModal: React.FC<UpdatePostModalProps> = ({ visible, onClose, post, refetch }) => {
-  const [form] = Form.useForm();
-  const [updatePost] = useUpdatePostMutation({
-    onCompleted: () => {
-      message.success('Post updated successfully');
-      onClose();
-      refetch?.();
-    },
-    onError: (err) => {
-      message.error(`Error: ${err.message}`);
-    },
-  });
-
-  const handleSave = async () => {
-    try {
-      await form.validateFields();
-      const values = form.getFieldsValue();
-      updatePost({
-        variables: {
-          id: post.id!,
-          title: values.title,
-          content: values.content,
-        },
-      });
-    } catch (error) {
-      message.error('Please fill in all required fields');
-    }
-  };
+  const { form, handleUpdatePost } = useUpdatePost({ onClose, post, refetch });
 
   return (
     <Modal
@@ -67,7 +43,7 @@ const UpdatePostModal: React.FC<UpdatePostModalProps> = ({ visible, onClose, pos
           <Input.TextArea rows={4} />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={handleSave}>
+          <Button type="primary" onClick={handleUpdatePost}>
             Save
           </Button>
           <Button style={{ marginLeft: '10px' }} onClick={onClose}>
