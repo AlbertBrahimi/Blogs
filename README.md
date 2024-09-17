@@ -17,10 +17,6 @@
 
 # Project Setup and Commands
 
-## Prerequisites
-
-Before running any commands, make sure you have MySQL running on your server. For development, we used XAMPP.
-
 ## Backend
 
 1. **Start the Backend**
@@ -44,7 +40,7 @@ This command will start the frontend development server. Ensure you are in the c
 
 **Prisma**
 
-1. If you make changes to the Prisma schema, run the following commands:
+1. If you make changes to the Schema Prisma, run the following commands:
 
 ```bash
 npx prisma migrate dev --name TheName
