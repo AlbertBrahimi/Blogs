@@ -14,3 +14,57 @@
 - **TypeScript**: A superset of JavaScript that adds static types to the language for improved developer experience.
 - **Apollo Client**: A library to manage GraphQL data and integrate it with React components.
 - **Ant Design**: A design system and React UI library to build the user interface with pre-designed components.
+
+# Project Setup and Commands
+
+## Prerequisites
+
+Before running any commands, make sure you have MySQL running on your server. For development, we used XAMPP.
+
+## Backend
+
+1. **Start the Backend**
+
+   Navigate to the backend directory and run:
+
+   ```bash
+   npm run start
+   ```
+
+   This command will start the backend server. Make sure you are in the correct directory before running it.
+
+2. **Start the Frontend**
+   Navigate to the frontend directory and run:
+
+```bash
+npm run start
+```
+
+This command will start the frontend development server. Ensure you are in the correct directory before running it.
+
+**Prisma**
+
+1. If you make changes to the Prisma schema, run the following commands:
+
+```bash
+npx prisma migrate dev --name TheName
+```
+
+Replace TheName with a descriptive name for your migration. 2. Generate prisma client
+
+```bash
+npx prisma generate
+```
+
+Make sure you are in backend directory.
+**Graphql Codegen**
+
+For the frontend, we have implemented GraphQL Codegen to streamline development. After writing a query or mutation, run:
+
+```bash
+npx graphql-codegen
+```
+
+This command will generate hooks that you can use in the frontend.
+
+Make sure you are in frontend directory.

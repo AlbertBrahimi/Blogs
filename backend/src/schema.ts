@@ -1,18 +1,7 @@
-import { gql } from 'apollo-server-express';
+import { makeSchema } from 'nexus';
+import { UserType, UserQuery, UserMutation } from './resolvers/user';
+import { PostType, PostQuery, PostMutation } from './resolvers/post';
 
-export const typeDefs = gql`
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-  }
-
-  type Query {
-    users: [User!]!
-    user(id: ID!): User
-  }
-
-  type Mutation {
-    createUser(name: String!, email: String!): User!
-  }
-`;
+export const schema = makeSchema({
+  types: [UserType, PostType, UserQuery, UserMutation, PostQuery, PostMutation],
+});

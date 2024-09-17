@@ -28,3 +28,6 @@ dist-ssr/
 
 # Other ignores
 *.local
+
+# Generated folder
+frontend/src/generated/
