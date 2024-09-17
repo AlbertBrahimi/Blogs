@@ -38,9 +38,12 @@ const UserList: React.FC = () => {
 
   return (
     <>
-      <Button type="primary" onClick={openModal} style={{ marginBottom: '16px' }}>
+    <div className='createButton'>
+      <Button type="primary" onClick={openModal}>
         Create a User
       </Button>
+
+    </div>
 
       <Table
         columns={columns}

@@ -16,7 +16,7 @@ const PostModal: React.FC<PostModalProps> = ({ visible, onClose, authorId, refet
       message.success('Post created successfully!');
       form.resetFields();
       if (refetch) {
-        refetch(); // Refetch to update the post list
+        refetch(); 
       }
       onClose();
     },

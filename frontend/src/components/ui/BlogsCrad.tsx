@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Col, Row, Button, message } from 'antd';
 import { Post } from '../../generated/operations';
-import PostModal from './PostModal';
 import UpdatePostModal from './UpdatePost';
 import { useDeletePostMutation } from '../../generated/operations';
 
@@ -22,7 +21,6 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
     },
   });
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
@@ -35,8 +33,6 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
     setUpdateModalVisible(true);
   };
 
-  const showModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
 
   const closeUpdateModal = () => {
     setUpdateModalVisible(false);
@@ -45,13 +41,6 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <Button
-        type="primary"
-        onClick={showModal}
-        style={{ marginBottom: '20px' }}
-      >
-        Create a Post
-      </Button>
       <Row gutter={16}>
         {posts
           .filter((post): post is Post => post !== null)
@@ -85,12 +74,6 @@ const UserBlogs: React.FC<UserBlogsProps> = ({ posts, userId, refetch }) => {
             </Col>
           ))}
       </Row>
-      <PostModal 
-        visible={modalVisible} 
-        onClose={closeModal} 
-        authorId={userId ?? '0'} 
-        refetch={refetch}
-      />
       {selectedPost && (
         <UpdatePostModal 
           visible={updateModalVisible} 
